@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import { prisma } from "../../config/dataSource.js";
 import { io, socketMap } from "../../app.js";
 
+const estado = {
+  estado: false
+}
+
 export async function getViajes(req: Request, res: Response) {
   const viajes = await prisma.viajes.findMany({
     where: {
@@ -59,4 +63,13 @@ export async function createViaje(req: Request, res: Response) {
   io.to(socketMap.get(usuarioId)).emit("empiezaViaje", viaje);
   io.to(transporteId).emit("nuevoPasajero", 1);
   res.status(200).send({ success: true });
+}
+
+export async function cambiarEstado(req: Request, res: Response) {
+  estado.estado = !estado.estado;
+  res.status(200).send({ success: true });
+}
+
+export async function verEstado(req: Request, res: Response) {
+  res.status(200).send({ success: true, estado: estado.estado });
 }
