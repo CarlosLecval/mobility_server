@@ -25,6 +25,7 @@ model notificaciones {
   origen                                    String   @db.VarChar(36)
   destino                                   String   @db.VarChar(36)
   mensaje                                   String   @db.VarChar(1000)
+  fechaCreacion                             DateTime @db.DateTime(0)
   usuarios_notificaciones_origenTousuarios  usuarios @relation("notificaciones_origenTousuarios", fields: [origen], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuarios_notificaciones_destinoTousuarios usuarios @relation("notificaciones_destinoTousuarios", fields: [destino], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
