@@ -10,6 +10,6 @@ const router = Router();
 router.getAsync("/all", getParadas);
 router.getAsync("/siguiente", getSiguienteParada);
 router.putAsync("/siguiente", updateSiguienteParada);
-router.getAsync("/transporte/:id", getParadaTransporte);
+router.getAsync("/transporte", getParadaTransporte);
 
 export default router;

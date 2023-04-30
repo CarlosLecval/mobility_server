@@ -34,7 +34,7 @@ export async function getParadas(req: Request, res: Response) {
   const oneHourLess = new Date();
   oneHourLess.setHours(oneHourLess.getHours() - 1);
   const paradas = await prisma.paradas.findMany({
-    select: {
+    include: {
       viajes_viajes_paradaInicioToparadas: {
         where: {
           inicio: {

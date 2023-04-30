@@ -6,6 +6,6 @@ const router = Router();
 router.use(passport.authorize("jwt", { session: false }));
 
 router.getAsync("/", getViajes);
-router.getAsync(":id", getViaje);
+router.getAsync("/id", getViaje);
 
 export default router;

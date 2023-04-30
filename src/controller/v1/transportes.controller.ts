@@ -3,7 +3,7 @@ import { prisma } from "../../config/dataSource.js";
 import { ParadaTransporte } from "../../types/custom.js";
 
 export async function getTransportesRuta(req: Request, res: Response) {
-  const rutaId: string = req.params.rutaId;
+  const rutaId: string = req.body.rutaId;
   const transportes = await prisma.rutas.findUnique({
     where: {
       id: rutaId,
