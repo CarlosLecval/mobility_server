@@ -3,7 +3,7 @@ import { getRutaTransporte, getTransporte, getTransportesRuta } from "../../cont
 const router = Router();
 
 router.getAsync('/', getTransportesRuta);
-router.getAsync('/:id', getTransporte);
-router.getAsync('/ruta/:id', getRutaTransporte);
+router.getAsync('/id', getTransporte);
+router.getAsync('/ruta', getRutaTransporte);
 
 export default router;

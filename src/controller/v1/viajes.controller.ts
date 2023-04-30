@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/dataSource.js";
+import { io, socketMap } from "../../app.js";
 
 export async function getViajes(req: Request, res: Response) {
   const viajes = await prisma.viajes.findMany({
@@ -35,4 +36,27 @@ export async function getViaje(req: Request, res: Response) {
     },
   });
   res.status(200).send({ success: true, viaje: viaje });
+}
+
+export async function createViaje(req: Request, res: Response) {
+  const usuarioId = req.usuarios!.id;
+  const inicio = new Date();
+  const transporteId: string = req.body.transporteId;
+  const paradaInicio: string = req.body.paradaInicio;
+  const viaje = await prisma.viajes.create({
+    data: {
+      usuarioId: usuarioId,
+      inicio: inicio,
+      transporteId: transporteId,
+      paradaInicio: paradaInicio
+    },
+    include: {
+      usuario: true,
+      transportes: true,
+      paradas_viajes_paradaInicioToparadas: true
+    }
+  });
+  io.to(socketMap.get(usuarioId)).emit("empiezaViaje", viaje);
+  io.to(transporteId).emit("nuevoPasajero", 1);
+  res.status(200).send({ success: true });
 }
